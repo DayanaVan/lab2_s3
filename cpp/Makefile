@@ -1,4 +1,4 @@
-all: bin bin/z1 bin/z4
+all: bin bin/z1 bin/z4 bin/z5
 
 bin:
 	mkdir bin
@@ -8,6 +8,12 @@ bin/z1: z1.o stack.o
 
 bin/z4: z4.o
 	g++ z4.o -o bin/z4
+
+bin/z5: z5.o
+	g++ z5.o -o bin/z5
+
+z5: z5.cpp
+	g++ z5.cpp -c -o z5.o
 
 z4.o: z4.cpp
 	g++ z4.cpp -c -o z4.o
