@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    cout << "Enter xml line\n";
+    printf("Enter xml line\n");
     string line;
     getline(cin, line);
     line.erase(std::remove_if(line.begin(), line.end(), [](char c) {
@@ -24,14 +24,17 @@ int main()
         if(line[i] == '<')
         {
             string tag = "";
-            bool opens = line[i+1] != '/';
-            
-            cout << "debug tag: " << tag << "\n";
-            if(opens)
+            bool closes = line[i+1] == '/';
+            for(int g = i; g < line.size(); g++)
             {
-                tags->push(tag);
+                if(line[g] == '>')
+                {
+                    tag = line.substr(i+1+closes, g-i-1-closes);
+                    break;
+                }
             }
-            else
+            printf("debug tag: %s\n",tag.c_str());   
+            if(closes)
             {
                 string prevTag = tags->pop();
                 if(prevTag != tag)
@@ -41,6 +44,10 @@ int main()
                     return 0;
                 }
             }
+            else//opens
+            {
+                tags->push(tag);
+            }
         }
         if(line[i] == '>')//previous > is bullshit or this one
         {
@@ -49,6 +56,8 @@ int main()
     }
     if(tags->top != nullptr)
     {
-        cout << "bad xml\n";
+        printf("bad xml\n");
+        return 0;
     }
+    printf("final xml: %s", line.c_str());
 }
