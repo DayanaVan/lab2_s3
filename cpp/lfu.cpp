@@ -11,7 +11,7 @@ LFUNode::LFUNode(int key, int value)
 LFU::LFU(int cap)
 {
     this->cap = cap;
-    this->items = std::vector<LFUNode*>(cap);
+    this->items = new LFUNode*[cap];
     this->size = 0;
 }
 
@@ -44,11 +44,11 @@ void LFU::set(int key, int value)
 
 int LFU::get(int key)
 {
-    for(LFUNode *node : this->items)
+    for(int i = 0; i < this->size; i++)
     {
-        if(node->key == key)
+        if(this->items[i]->key == key)
         {
-            int toReturn = node->value;
+            int toReturn = this->items[i]->value;
             rebalance(key);
             return toReturn;
         }

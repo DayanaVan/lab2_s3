@@ -1,4 +1,4 @@
-//var 8
+//var * не сделано
 
 #include <iostream>
 

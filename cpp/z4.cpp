@@ -1,7 +1,6 @@
 //var 4 piramida
 
 #include <iostream>
-#include <vector>
 #include <algorithm>
 
 using namespace std;
@@ -16,13 +15,13 @@ int main()
 {
     int n;
     cin >> n;
-    vector<block> blocks(n);
+    block blocks[n];
     for(int i = 0; i < n; i++)
     {
         cin >> blocks[i].width;
         cin >> blocks[i].height;
     }
-    sort(blocks.begin(), blocks.end(), [](block a, block b) {
+    sort(blocks, blocks+n, [](block a, block b) {
         if(a.width != b.width)
         {
             return a.width > b.width;

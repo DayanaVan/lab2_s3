@@ -14,7 +14,7 @@ struct LFU
     int cap;
     int size;
 
-    std::vector<LFUNode*> items;
+    LFUNode **items;
 
     LFU(int cap);
 

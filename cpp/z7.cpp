@@ -8,11 +8,11 @@ using namespace std;
 
 int main()
 {
-    int cap;
-    cin >> cap;
+    int cap, n;
+    cin >> cap >> n;
     LFU *l = new LFU(cap); 
     string command;
-    while(1)
+    for(int i = 0; i < n; i++)
     {
         cin >> command;
         if(command == "exit")

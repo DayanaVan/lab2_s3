@@ -1,63 +1,81 @@
-//var 7 xml parser
-
-//random / > <
-//forgot / > <
-//random > < inside of tag
+//var 7
 
 #include <iostream>
 #include <algorithm>
+#include <limits>
 #include "stack.h"
 
 using namespace std;
 
-int main()
+bool checkXML(string& xml)
 {
-    printf("Enter xml line\n");
-    string line;
-    getline(cin, line);
-    line.erase(std::remove_if(line.begin(), line.end(), [](char c) {
-        return isspace((unsigned int)c);
-    }), line.end());
-    Stack *tags = new Stack;
-    for(int i = 0; i < line.size(); i++)
+    int tagCount = 0;
+    Stack tags;
+    for (int i = 0; i < xml.size(); i++)
     {
-        if(line[i] == '<')
+        if (xml[i] == '<')
         {
             string tag = "";
-            bool closes = line[i+1] == '/';
-            for(int g = i; g < line.size(); g++)
+            bool closes = xml[i + 1] == '/';
+            for (int g = i; g < xml.size(); g++)
             {
-                if(line[g] == '>')
+                if (xml[g] == '>')
                 {
-                    tag = line.substr(i+1+closes, g-i-1-closes);
+                    tag = xml.substr(i + 1 + closes, g - i - 1 - closes);
+                    i = g;
                     break;
                 }
             }
-            printf("debug tag: %s\n",tag.c_str());   
-            if(closes)
+            if (tag == "")
+                return false;
+            if (closes)
             {
-                string prevTag = tags->pop();
-                if(prevTag != tag)
+                string prevTag = tags.pop();
+                if (prevTag != tag)
                 {
-                    //bad
-                    cout << "bad xml\n";
-                    return 0;
+                    return false;
                 }
             }
-            else//opens
+            else
             {
-                tags->push(tag);
+                tags.push(tag);
+                tagCount++;
             }
         }
-        if(line[i] == '>')//previous > is bullshit or this one
-        {
-            
-        }
+        else if (xml[i] == '>')
+            return false;
     }
-    if(tags->top != nullptr)
+    return (tags.top == nullptr) && tagCount > 0;
+}
+
+int main()
+{
+    printf("Enter xml line\n");
+    string xml;
+    getline(cin, xml);
+    xml.erase(std::remove_if(xml.begin(), xml.end(), [](char c) {
+        return isspace((unsigned int)c);
+        }), xml.end());
+    if (checkXML(xml))
     {
-        printf("bad xml\n");
+        cout << "good xml\n";
         return 0;
     }
-    printf("final xml: %s", line.c_str());
+    for (int i = 0; i < xml.size(); i++)
+    {
+        string newXml = xml;
+        for (char c : "></abcdefghijklmnopqrstuvwxyz")
+        {
+            if (newXml[i] == c)
+                continue;
+            newXml[i] = c;
+            if (checkXML(newXml))
+            {
+                printf("change %c at %d to %c\n", xml[i], i, c);
+                cout << "new xml: " << newXml << "\n";
+                return 0;
+            }
+        }
+    }
+    cout << "wrong xml\n";
 }

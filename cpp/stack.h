@@ -13,6 +13,7 @@ struct StackNode
 struct Stack
 {
     Stack();
+    ~Stack();
 
     StackNode *top;
 

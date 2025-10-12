@@ -11,6 +11,17 @@ Stack::Stack()
     this->top = nullptr;
 }
 
+Stack::~Stack()
+{
+    StackNode *n = this->top;
+    while(n != nullptr)
+    {
+        StackNode *toDelete = n->prev;
+        n = n->prev;
+        delete toDelete;
+    }
+}
+
 void Stack::push(std::string key)
 {
     StackNode *newNode = new StackNode(key);
