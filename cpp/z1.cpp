@@ -10,7 +10,7 @@ using namespace std;
 bool checkXML(string& xml)
 {
     int tagCount = 0;
-    Stack tags;
+    Stack *tags = new Stack();
     for (int i = 0; i < xml.size(); i++)
     {
         if (xml[i] == '<')
@@ -30,7 +30,7 @@ bool checkXML(string& xml)
                 return false;
             if (closes)
             {
-                string prevTag = tags.pop();
+                string prevTag = tags->pop();
                 if (prevTag != tag)
                 {
                     return false;
@@ -38,14 +38,16 @@ bool checkXML(string& xml)
             }
             else
             {
-                tags.push(tag);
+                tags->push(tag);
                 tagCount++;
             }
         }
         else if (xml[i] == '>')
             return false;
     }
-    return (tags.top == nullptr) && tagCount > 0;
+    bool a = tags->top == nullptr;
+    delete tags;
+    return a && tagCount > 0;
 }
 
 int main()

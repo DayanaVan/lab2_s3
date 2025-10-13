@@ -1,4 +1,4 @@
-all: bin bin/z1 bin/z2 bin/z3 bin/z4 bin/z5 bin/z7
+all: bin bin/z1 bin/z2 bin/z3 bin/z4 bin/z5 bin/z6a bin/z6 bin/z7
 
 bin:
 	mkdir bin
@@ -8,6 +8,18 @@ bin/z7: z7.o lfu.o
 
 z7.o: z7.cpp
 	g++ z7.cpp -c -o z7.o
+
+bin/z6: z6.o hashtabledouble.o
+	g++ z6.o hashtabledouble.o -o bin/z6
+
+z6.o: z6.cpp
+	g++ z6.cpp -c -o z6.o
+
+bin/z6a: z6a.o hashtabledouble.o hashtablecuckoo.o
+	g++ z6a.o hashtabledouble.o hashtablecuckoo.o -o bin/z6a
+
+z6a.o: z6a.cpp
+	g++ z6a.cpp -c -o z6a.o
 
 bin/z2: z2.o set.o
 	g++ z2.o set.o -o bin/z2
@@ -38,21 +50,6 @@ z4.o: z4.cpp
 
 z1.o: z1.cpp
 	g++ z1.cpp -c -o z1.o
-
-array.o: array.cpp array.h
-	g++ array.cpp -c -o array.o
-
-forwardlist.o: forwardlist.cpp forwardlist.h
-	g++ forwardlist.cpp -c -o forwardlist.o
-
-list.o: list.cpp list.h
-	g++ list.cpp -c -o list.o
-
-queue.o: queue.cpp queue.h
-	g++ queue.cpp -c -o queue.o
-
-rbtree.o: rbtree.cpp rbtree.h
-	g++ rbtree.cpp -c -o rbtree.o
 
 stack.o: stack.cpp stack.h
 	g++ stack.cpp -c -o stack.o
