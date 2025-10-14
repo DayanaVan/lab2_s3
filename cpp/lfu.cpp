@@ -40,6 +40,7 @@ void LFU::set(int key, int value)
         }
         this->items[this->cap - 1] = new LFUNode(key, value);
     }
+    rebalance();
 }
 
 int LFU::get(int key)
@@ -54,6 +55,20 @@ int LFU::get(int key)
         }
     }
     return -1;
+}
+
+void LFU::rebalance()
+{
+    for(int i = 0; i < this->size; i++)
+    {
+        for(int j = 0; j < this->size-1-i; j++)
+        {
+            if(this->items[j]->count > this->items[j+1]->count)
+            {
+                std::swap(this->items[j], this->items[j+1]);
+            }
+        }
+    }
 }
 
 void LFU::rebalance(int key)

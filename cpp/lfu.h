@@ -23,4 +23,6 @@ struct LFU
     int get(int key);
 
     void rebalance(int key);
+
+    void rebalance();
 };
