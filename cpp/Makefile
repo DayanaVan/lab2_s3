@@ -1,70 +1,65 @@
-all: bin bin/z1 bin/z2 bin/z3 bin/z4 bin/z5 bin/z6a bin/z6 bin/z7
+# Компилятор и флаги
+CXX := g++
+CXXFLAGS := -std=c++11 -Wall -Wextra -O2
 
-bin:
-	mkdir bin
+# Директории
+BIN_DIR := bin
+SRC_DIR := .
 
-bin/z7: z7.o lfu.o
-	g++ z7.o lfu.o -o bin/z7
+# Все цели
+TARGETS := $(BIN_DIR)/z1 $(BIN_DIR)/z2 $(BIN_DIR)/z3 $(BIN_DIR)/z4 $(BIN_DIR)/z5 \
+           $(BIN_DIR)/z6a $(BIN_DIR)/z6 $(BIN_DIR)/z7
 
-z7.o: z7.cpp
-	g++ z7.cpp -c -o z7.o
+# Объектные файлы
+OBJS := z1.o z2.o z3.o z4.o z5.o z6.o z6a.o z7.o \
+        stack.o set.o lfu.o hashtabledouble.o hashtablecuckoo.o
 
-bin/z6: z6.o hashtabledouble.o
-	g++ z6.o hashtabledouble.o -o bin/z6
+# Основная цель
+all: $(BIN_DIR) $(TARGETS)
 
-z6.o: z6.cpp
-	g++ z6.cpp -c -o z6.o
+# Создание директории
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
 
-bin/z6a: z6a.o hashtabledouble.o hashtablecuckoo.o
-	g++ z6a.o hashtabledouble.o hashtablecuckoo.o -o bin/z6a
+# Правила для исполняемых файлов
+$(BIN_DIR)/z1: z1.o stack.o
+	$(CXX) $^ -o $@
 
-z6a.o: z6a.cpp
-	g++ z6a.cpp -c -o z6a.o
+$(BIN_DIR)/z2: z2.o set.o
+	$(CXX) $^ -o $@
 
-bin/z2: z2.o set.o
-	g++ z2.o set.o -o bin/z2
+$(BIN_DIR)/z3: z3.o set.o
+	$(CXX) $^ -o $@
 
-z2.o: z2.cpp
-	g++ z2.cpp -c -o z2.o
+$(BIN_DIR)/z4: z4.o
+	$(CXX) $^ -o $@
 
-bin/z3: z3.o set.o
-	g++ z3.o set.o -o bin/z3
+$(BIN_DIR)/z5: z5.o hashtabledouble.o
+	$(CXX) $^ -o $@
 
-z3.o: z3.cpp
-	g++ z3.cpp -c -o z3.o
+$(BIN_DIR)/z6: z6.o hashtabledouble.o
+	$(CXX) $^ -o $@
 
-bin/z1: z1.o stack.o
-	g++ z1.o stack.o -o bin/z1
+$(BIN_DIR)/z6a: z6a.o hashtabledouble.o hashtablecuckoo.o
+	$(CXX) $^ -o $@
 
-bin/z4: z4.o
-	g++ z4.o -o bin/z4
+$(BIN_DIR)/z7: z7.o lfu.o
+	$(CXX) $^ -o $@
 
-bin/z5: z5.o
-	g++ z5.o -o bin/z5
+# Общее правило для объектных файлов
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-z5.o: z5.cpp
-	g++ z5.cpp -c -o z5.o
-
-z4.o: z4.cpp
-	g++ z4.cpp -c -o z4.o
-
-z1.o: z1.cpp
-	g++ z1.cpp -c -o z1.o
-
+# Зависимости для объектных файлов
 stack.o: stack.cpp stack.h
-	g++ stack.cpp -c -o stack.o
-
 set.o: set.cpp set.h
-	g++ set.cpp -c -o set.o
-
 lfu.o: lfu.cpp lfu.h
-	g++ lfu.cpp -c -o lfu.o
-
 hashtabledouble.o: hashtabledouble.cpp hashtabledouble.h
-	g++ hashtabledouble.cpp -c -o hashtabledouble.o
-
 hashtablecuckoo.o: hashtablecuckoo.cpp hashtablecuckoo.h
-	g++ hashtablecuckoo.cpp -c -o hashtablecuckoo.o
 
+# Очистка
 clean:
-	rm -f *.o
+	rm -f $(OBJS)
+	rm -rf $(BIN_DIR)
+
+.PHONY: all clean

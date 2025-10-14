@@ -47,6 +47,7 @@ void HashTableDouble::rehash()
 {
     Entry **oldTable = this->table;
     int oldCapacity = this->capacity;
+    this->size = 0;
 
     //find new prime capacity
     this->capacity = this->capacity * 2;
@@ -115,9 +116,9 @@ bool HashTableDouble::contains(int key)
 
 void HashTableDouble::insert(int key, int value)
 {
-    if((double) this->size / this->capacity)
+    if((double) this->size / this->capacity > MAX_LOAD)
     {
-
+        rehash();
     }
     int h1 = hash1(key);
     int h2 = hash2(key);

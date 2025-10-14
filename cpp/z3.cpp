@@ -11,7 +11,7 @@ Set *intersection(Set* a, Set* b)
 {
     Set *in = new Set(32);
     vector<int> aVector = a->toVector();
-    for (int i = 0; i < aVector.size(); i++)
+    for (size_t i = 0; i < aVector.size(); i++)
     {
         if (b->contains(aVector[i]))
         {

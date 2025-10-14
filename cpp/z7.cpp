@@ -8,12 +8,14 @@ using namespace std;
 
 int main()
 {
-    int cap, n;
-    cin >> cap >> n;
+    cout << "Введите размер кэша\n";
+    int cap;
+    cin >> cap;
     LFU *l = new LFU(cap); 
     string command;
-    for(int i = 0; i < n; i++)
+    while(1)
     {
+        cout << "Введите команду\n";
         cin >> command;
         if(command == "exit")
         {

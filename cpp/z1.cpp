@@ -9,15 +9,15 @@ using namespace std;
 
 bool checkXML(string& xml)
 {
-    int tagCount = 0;
+    size_t tagCount = 0;
     Stack *tags = new Stack();
-    for (int i = 0; i < xml.size(); i++)
+    for (size_t i = 0; i < xml.size(); i++)
     {
         if (xml[i] == '<')
         {
             string tag = "";
             bool closes = xml[i + 1] == '/';
-            for (int g = i; g < xml.size(); g++)
+            for (size_t g = i; g < xml.size(); g++)
             {
                 if (xml[g] == '>')
                 {
@@ -63,7 +63,7 @@ int main()
         cout << "good xml\n";
         return 0;
     }
-    for (int i = 0; i < xml.size(); i++)
+    for (size_t i = 0; i < xml.size(); i++)
     {
         string newXml = xml;
         for (char c : "></abcdefghijklmnopqrstuvwxyz")
@@ -73,7 +73,7 @@ int main()
             newXml[i] = c;
             if (checkXML(newXml))
             {
-                printf("change %c at %d to %c\n", xml[i], i, c);
+                printf("change %c at %ld to %c\n", xml[i], i, c);
                 cout << "new xml: " << newXml << "\n";
                 return 0;
             }
