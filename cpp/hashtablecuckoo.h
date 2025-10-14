@@ -1,4 +1,7 @@
+#pragma once
+
 #include <algorithm>
+#include <string>
 
 struct HashTableCuckoo
 {
@@ -31,4 +34,5 @@ struct HashTableCuckoo
     void remove(int key);
     int get(int key);
 
+    std::string toString();
 };

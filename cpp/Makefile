@@ -8,11 +8,11 @@ SRC_DIR := .
 
 # Все цели
 TARGETS := $(BIN_DIR)/z1 $(BIN_DIR)/z2 $(BIN_DIR)/z3 $(BIN_DIR)/z4 $(BIN_DIR)/z5 \
-           $(BIN_DIR)/z6a $(BIN_DIR)/z6 $(BIN_DIR)/z7
+           $(BIN_DIR)/z6a $(BIN_DIR)/z6b $(BIN_DIR)/z6 $(BIN_DIR)/z7
 
 # Объектные файлы
-OBJS := z1.o z2.o z3.o z4.o z5.o z6.o z6a.o z7.o \
-        stack.o set.o lfu.o hashtabledouble.o hashtablecuckoo.o
+OBJS := z1.o z2.o z3.o z4.o z5.o z6.o z6a.o z6b.o z7.o \
+        stack.o set.o lfu.o hashtabledouble.o hashtablecuckoo.o array.o
 
 # Основная цель
 all: $(BIN_DIR) $(TARGETS)
@@ -31,7 +31,7 @@ $(BIN_DIR)/z2: z2.o set.o
 $(BIN_DIR)/z3: z3.o set.o
 	$(CXX) $^ -o $@
 
-$(BIN_DIR)/z4: z4.o
+$(BIN_DIR)/z4: z4.o array.o
 	$(CXX) $^ -o $@
 
 $(BIN_DIR)/z5: z5.o hashtabledouble.o
@@ -41,6 +41,9 @@ $(BIN_DIR)/z6: z6.o hashtabledouble.o
 	$(CXX) $^ -o $@
 
 $(BIN_DIR)/z6a: z6a.o hashtabledouble.o hashtablecuckoo.o
+	$(CXX) $^ -o $@
+
+$(BIN_DIR)/z6b: z6b.o hashtabledouble.o hashtablecuckoo.o
 	$(CXX) $^ -o $@
 
 $(BIN_DIR)/z7: z7.o lfu.o
@@ -56,6 +59,7 @@ set.o: set.cpp set.h
 lfu.o: lfu.cpp lfu.h
 hashtabledouble.o: hashtabledouble.cpp hashtabledouble.h
 hashtablecuckoo.o: hashtablecuckoo.cpp hashtablecuckoo.h
+array.o: array.cpp array.h
 
 # Очистка
 clean:

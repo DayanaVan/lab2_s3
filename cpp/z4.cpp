@@ -2,43 +2,47 @@
 
 #include <iostream>
 #include <algorithm>
+#include "array.h"
 
 using namespace std;
-
-struct block
-{
-    int width;
-    int height;
-};
 
 int main()
 {
     int n;
     cin >> n;
-    block blocks[n];
+    Array *blocks = new Array();
     for(int i = 0; i < n; i++)
     {
-        cin >> blocks[i].width;
-        cin >> blocks[i].height;
+        int width, height;
+        cin >> width >> height;
+        block b{width, height};
+        blocks->add(b);
     }
-    sort(blocks, blocks+n, [](block a, block b) {
-        if(a.width != b.width)
+    for(int i = 0; i < blocks->size; i++)
+    {
+        for(int j = 0; j < blocks->size-1; j++)
         {
-            return a.width > b.width;
+            if(blocks->get(j).width < blocks->get(j+1).width)
+            {
+                swap(blocks->memory[j], blocks->memory[j+1]);
+            }
+            else if(blocks->get(j).width == blocks->get(j+1).width)
+            {
+                if(blocks->get(j).height < blocks->get(j+1).height)
+                {
+                    swap(blocks->memory[j], blocks->memory[j+1]);
+                }
+            }
         }
-        else
-        {
-            return a.height > b.height;
-        }
-    });
-    int resultHeight = blocks[0].height;
-    int prevWidth = blocks[0].width;
+    }
+    int resultHeight = blocks->get(0).height;
+    int prevWidth = blocks->get(0).width;
     for(int i = 1; i < n; i++)
     {
-        if(blocks[i].width < prevWidth)
+        if(blocks->get(i).width < prevWidth)
         {
-            resultHeight += blocks[i].height;
-            prevWidth = blocks[i].width;
+            resultHeight += blocks->get(i).height;
+            prevWidth = blocks->get(i).width;
         }
     }
     cout << resultHeight << "\n";

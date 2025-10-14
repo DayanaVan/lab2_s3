@@ -13,13 +13,8 @@ Stack::Stack()
 
 Stack::~Stack()
 {
-    StackNode *n = this->top;
-    while(n != nullptr)
-    {
-        StackNode *toDelete = n->prev;
-        n = n->prev;
-        delete toDelete;
-    }
+    while(this->top != nullptr)
+        pop();
 }
 
 void Stack::push(std::string key)

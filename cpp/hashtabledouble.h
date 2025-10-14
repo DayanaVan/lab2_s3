@@ -1,3 +1,8 @@
+#pragma once
+
+#include <string>
+#include <iostream>
+
 struct HashTableDouble
 {
     const double MAX_LOAD = 0.75;
@@ -26,4 +31,6 @@ struct HashTableDouble
     bool contains(int key);
     void remove(int key);
     int get(int key);
+
+    std::string toString();
 };

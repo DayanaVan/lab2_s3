@@ -63,11 +63,10 @@ void LFU::rebalance(int key)
         if(this->items[i]->key == key)
         {
             this->items[i]->count++;
-            for(int g = i+1; g < this->size-1; g++)
+            for(int g = i+1; g < this->size; g++)
             {
-                if(this->items[g-1]->count < this->items[g]->count)
-                    break;
-                std::swap(this->items[g-1], this->items[g]);
+                if(this->items[g-1]->count >= this->items[g]->count)
+                    std::swap(this->items[g-1], this->items[g]);
             }
             break;
         }

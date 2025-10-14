@@ -71,4 +71,8 @@ int main()
         cout << "Пересечение: {" << sets[result1]->toString() << "} и {" << sets[result2]->toString() << "} = {"
             << result->toString() << "}";
     }
+    else
+    {
+        cout << "Пересечений нет";
+    }
 }

@@ -185,3 +185,17 @@ int HashTableDouble::get(int key)
     }
     return 0;
 }
+
+std::string HashTableDouble::toString()
+{
+    std::string result = "";
+    for(int i = 0; i < this->capacity; i++)
+    {
+        if(this->table[i] != nullptr && !this->table[i]->deleted)
+        {
+            result += std::to_string(this->table[i]->key) + " : "
+            + std::to_string(this->table[i]->value) + "\n";
+        }
+    }
+    return result;
+}

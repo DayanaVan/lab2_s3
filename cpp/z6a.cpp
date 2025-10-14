@@ -1,40 +1,63 @@
 #include <iostream>
 #include "hashtablecuckoo.h"
 #include "hashtabledouble.h"
+#include <chrono>
 
 using namespace std;
 
 int main()
 {
-    HashTableCuckoo *htc = new HashTableCuckoo(16);
-    for(int i = 0; i < 100; i++)
+    for(int i = 0; i < 3; i++)
     {
-        htc->insert(i,i);
-    }
-    cout << "fsdfsdfsdfsdfsdf\n";
-    for(int i = 0; i < htc->capacity; i++)
-    {
-        /*if(htc->table1[i] != nullptr && !htc->table1[i]->deleted)
+        cout << "Опыт " << i+1 << " --------\n";
+
+        cout << "Кукушка:\n";
+        cout << "Вставка 100 элементов - ";
+        HashTableCuckoo *htc = new HashTableCuckoo(16);
+        auto start_time = std::chrono::steady_clock::now();
+        for(int i = 0; i < 100; i++)
         {
-            cout << htc->table1[i]->key << "\n";
+            htc->insert(i,i);
         }
-        if(htc->table2[i] != nullptr && !htc->table2[i]->deleted)
+        auto end_time = std::chrono::steady_clock::now();
+        auto elapsed_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+        cout << elapsed_ns.count() << " ns\n";
+
+        cout << "Поиск 100 элементов = ";
+
+        start_time = std::chrono::steady_clock::now();
+        for(int i = 0; i < 100; i++)
         {
-            cout << htc->table2[i]->key << "\n";
-        }*/
-    }
-    HashTableDouble *htd = new HashTableDouble(7);
-    for(int i = 0; i < 100; i++)
-    {
-        htd->insert(i,i);
-    }
-    cout << "fsdfsdfsdfsdfsdf\n";
-    for(int i = 0; i < htd->capacity; i++)
-    {
-        if(htd->table[i] != nullptr && !htd->table[i]->deleted)
-        {
-            cout << htd->table[i]->key << "\n";
+            htc->contains(i);
         }
+        end_time = std::chrono::steady_clock::now();
+        elapsed_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+        cout << elapsed_ns.count() << " ns\n";
+
+        cout << "Двойное хэширование\n";
+        cout << "Вставка 100 элементов - ";
+        HashTableDouble *htd = new HashTableDouble(7);
+        start_time = std::chrono::steady_clock::now();
+        for(int i = 0; i < 100; i++)
+        {
+            htd->insert(i,i);
+        }
+        end_time = std::chrono::steady_clock::now();
+        elapsed_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+        cout << elapsed_ns.count() << " ns\n";
+
+        cout << "Поиск 100 элементов = ";
+
+        start_time = std::chrono::steady_clock::now();
+        for(int i = 0; i < 100; i++)
+        {
+            htd->contains(i);
+        }
+        end_time = std::chrono::steady_clock::now();
+        elapsed_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+        cout << elapsed_ns.count() << " ns\n";
+        delete htd;
+        delete htc;
     }
     return 0;
 }

@@ -178,3 +178,25 @@ int HashTableCuckoo::get(int key)
     }
     return 0;
 }
+
+std::string HashTableCuckoo::toString()
+{
+    std::string result = "";
+    for(int i = 0; i < this->capacity; i++)
+    {
+        if(this->table1[i] != nullptr && !this->table1[i]->deleted)
+        {
+            result += std::to_string(this->table1[i]->key) + " : "
+            + std::to_string(this->table1[i]->value) + " table1\n";
+        }
+    }
+    for(int i = 0; i < this->capacity; i++)
+    {
+        if(this->table2[i] != nullptr && !this->table2[i]->deleted)
+        {
+            result += std::to_string(this->table2[i]->key) + " : "
+            + std::to_string(this->table2[i]->value) + " table2\n";
+        }
+    }
+    return result;
+}
