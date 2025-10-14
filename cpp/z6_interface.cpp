@@ -48,7 +48,7 @@ int main()
             {
                 int key;
                 cin >> key;
-                cout << htd->get(key);
+                cout << htd->get(key) << "\n";
             }
             else if(command == "exit")
             {
