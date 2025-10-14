@@ -16,8 +16,10 @@ struct treeNode
 
 void deleteTree(treeNode *node)
 {
-    deleteTree(node->r);
-    deleteTree(node->l);
+    if(node->r != nullptr)
+        deleteTree(node->r);
+    if(node->l != nullptr)
+        deleteTree(node->l);
     delete node;
 }
 

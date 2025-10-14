@@ -38,9 +38,5 @@ int main()
         {
             printf("Неизвестная команда\n");
         }
-        for(int i = 0; i < l->size; i++)
-        {
-            cout << l->items[i]->key << " " << l->items[i]->count << "\n";
-        }
     }
 }
