@@ -38,7 +38,6 @@ int main()
         }
     }
 
-    // Жадный сбор пирамиды: берём блоки, пока ширина уменьшается
     int resultHeight = blocks->get(0).height;
     int prevWidth = blocks->get(0).width;
     for(int i = 1; i < n; i++)
